@@ -1,5 +1,3 @@
-Build release for YNH package
-
 # Providing prebuilt archive within Yunohost packages
 
 ## Table of content
