@@ -94,7 +94,7 @@ To set it up, you will need to:
             extract = true
             in_subdir = true
     ```
-3. **Copy workflows files to `/.github/workflows/` in your package's repository** (or only the ones you want - generally at least "on-demand" and "on-upstream-update"), in which you would have **tailored the second step (e.g. "Setup Node.js") to your needs** (than can mean changing Node version, or using another build environment than Node.js crafting your own adequate action - feel free to submit a PR to add a template to this repo).
+3. **Copy workflows files to `/.github/workflows/` in your package's repository** (or only the ones you want - generally at least "on-demand" and "on-upstream-update"), in which you would have **tailored the second step (e.g. "Setup Node.js") to your needs** (than can mean changing Node version, or using another runtime environment than Node.js crafting your own adequate action - feel free to submit a PR to add a template to this repo).
 Three kinds of template workflows are available:
     - **`ynh-build-on-demand.yml`** runs when you manually trigger it on a selected branch of your package's repository.
     - **`ynh-build-on-upstream-update.yml`** runs when a pull request is created by YunoHost autoupdate bot (yunohost-bot) according to the `autoupdate.stragegy` declared in the `manifest.toml` - generally in `[resources.sources.main]`.
