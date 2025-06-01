@@ -5,9 +5,9 @@ Build release for YNH package
 ## Table of content
 - [Why using a prebuilt archive in an app package ?](#why-using-a-prebuilt-archive-in-an-app-package-)
 - [How to build the app and distribute the resulting files](#how-to-build-the-app-and-distribute-the-resulting-files)
-   * [1. Local build by the package maintainer](#1-local-build-by-the-package-maintainer)
-   * [2. Cloud build using Github Actions in the app package's repository](#2-cloud-build-using-github-actions-in-the-app-packages-repository)
-   * [3. [someday™?] Cloud build using Yunohost's own infrastructure](#3-someday-cloud-build-using-yunohosts-own-infrastructure)
+  * [1. Local build by the package maintainer](#1-local-build-by-the-package-maintainer)
+  * [2. Cloud build using Github Actions in the app package's repository](#2-cloud-build-using-github-actions-in-the-app-packages-repository)
+  * [3. [someday™?] Cloud build using Yunohost's own infrastructure](#3-someday-cloud-build-using-yunohosts-own-infrastructure)
 
 <a name="why-using-a-prebuilt-archive-in-an-app-package-"></a>
 ## Why using a prebuilt archive in an app package ?
@@ -25,7 +25,6 @@ Consequently the building step could be the only obstacle preventing from instal
 
 Several approaches can tackle this issue although they all boil down to the same principle: have one actor building the app files from upstream source and then host it online where `install` and `upgrade` scripts will point to.
 YunoHost instance admins finding themselves in the more extreme case 3 above may be happy with some of the approaches proposed which are auditable to some extent, or more radically prefer sticking with local build.
-    - TODO: Ideally a choice would be offered at install between prebuilt archive (if available) or local build.
 
 <a name="how-to-build-the-app-and-distribute-the-resulting-files"></a>
 ## How to build the app and distribute the resulting files
@@ -95,7 +94,7 @@ To set it up, you will need to:
             extract = true
             in_subdir = true
     ```
-3. **Copy workflows files to `/.github/workflows/` in your package's repository** (or only the ones you want - generally at least "on-demand" and "on-upstream-update"), in which you would have **tailored the second step (e.g. "Setup Node.js") to your needs** (than can mean changing Node version, or using another framework than Node.js crafting your own adequate action - feel free to submit a PR to add a template to this repo).
+3. **Copy workflows files to `/.github/workflows/` in your package's repository** (or only the ones you want - generally at least "on-demand" and "on-upstream-update"), in which you would have **tailored the second step (e.g. "Setup Node.js") to your needs** (than can mean changing Node version, or using another build environment than Node.js crafting your own adequate action - feel free to submit a PR to add a template to this repo).
 Three kinds of template workflows are available:
     - **`ynh-build-on-demand.yml`** runs when you manually trigger it on a selected branch of your package's repository.
     - **`ynh-build-on-upstream-update.yml`** runs when a pull request is created by YunoHost autoupdate bot (yunohost-bot) according to the `autoupdate.stragegy` declared in the `manifest.toml` - generally in `[resources.sources.main]`.
@@ -129,3 +128,8 @@ The method would be similar to the previous one, but would use Yunohost infrastr
 - **Pro**: Build process (could be made) auditable (build log, time, file checksum availables).
 - **Con**: Additional maintenance work for the YunoHost project.
 - **Con**: Potential additional infrastructure costs for the YunoHost project.
+
+## To-do list
+- [ ] Harmonize with @Josue-T script for synapse which is already in production so that we ideally have a single common template to make it easier for packagers.
+- [ ] Add support for multi-arch apps
+- [ ] Tweak YNH core to offer a choice at install between prebuilt archive (if available) or local build.
