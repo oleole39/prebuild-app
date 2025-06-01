@@ -1,5 +1,15 @@
+Build release for YNH package
+
 # Providing prebuilt archive within Yunohost packages
 
+## Table of content
+- [Why using a prebuilt archive in an app package ?](#why-using-a-prebuilt-archive-in-an-app-package-)
+- [How to build the app and distribute the resulting files](#how-to-build-the-app-and-distribute-the-resulting-files)
+   * [1. Local build by the package maintainer](#1-local-build-by-the-package-maintainer)
+   * [2. Cloud build using Github Actions in the app package's repository](#2-cloud-build-using-github-actions-in-the-app-packages-repository)
+   * [3. [someday™?] Cloud build using Yunohost's own infrastructure](#3-someday-cloud-build-using-yunohosts-own-infrastructure)
+
+<a name="why-using-a-prebuilt-archive-in-an-app-package-"></a>
 ## Why using a prebuilt archive in an app package ?
 YunoHost strives to **be as efficient as possible in terms of resources usage** in order to be used on old and/or low-end hardware.
 Therefore YunoHost packagers generally use a prebuilt archive when available upstream instead of building the app locally at installation (thus saving the least beefy hardware from the build effort and providing a smoother installation process).
@@ -17,36 +27,43 @@ Several approaches can tackle this issue although they all boil down to the same
 YunoHost instance admins finding themselves in the more extreme case 3 above may be happy with some of the approaches proposed which are auditable to some extent, or more radically prefer sticking with local build.
     - TODO: Ideally a choice would be offered at install between prebuilt archive (if available) or local build.
 
+<a name="how-to-build-the-app-and-distribute-the-resulting-files"></a>
 ## How to build the app and distribute the resulting files
 
 There are several methods currently in use and you may chose the one you prefer.
 The most convenient one for now may be the second one described below.
 
+<a name="1-local-build-by-the-package-maintainer"></a>
 ### 1. Local build by the package maintainer
 The package maintainer builds the app on his/her machine and upload the resuting files to the Github Releases section of the package's repository.
 
+<a name="proscons"></a>
 #### Pros/Cons
 - **Pro**: Easy to move (if YunoHost happens to come to selfhost its packages' repository in the future) since GitHub is only used as a distribution channel (the build part being independant form it).
 - **Con**: The app packager is required to have the adequate available hardware to perform the build.
 - **Con**: Despite open-sourcing of the build scripts, there can't really be transparency on the build action itself, so YunoHost instance admins must trust the packager that the app files were not tampered during build time.
 
+<a name="what-to-do"></a>
 #### What to do
 This is the first approach used historically among YunoHost apps and may take different forms.
 An interesting example is the one created by [Josue-T](https://github.com/Josue-T) which is used so far to maintain [synapse_ynh](https://github.com/YunoHost-Apps/synapse_ynh). The build and upload processes are being automatized by the following scripts the maintainer runs via a Cron job on a personal machine:
 - https://github.com/YunoHost-Apps/synapse_ynh/tree/master/auto_update
 - https://github.com/YunoHost-Apps/synapse_python_build
 
+<a name="2-cloud-build-using-github-actions-in-the-app-packages-repository"></a>
 ### 2. Cloud build using Github Actions in the app package's repository
 This may be the most convenient method currently available for package maintainers. It is currently used by several apps:
 - [it-tools_ynh](https://github.com/Yunohost-Apps/it-tools_ynh) 
 - [jsoncrack_ynh](https://github.com/Yunohost-Apps/jsoncrack_ynh)
 
+<a name="proscons-1"></a>
 #### Pros/Cons
 - **Pro**: No cost and no hardware requirement for the either the package maintainer or the YunoHost project.
 - **Pro**: Build process is auditable (build log, time, file checksum availables) provided you are logged into GitHub.
 - **Con**: Relies fully on GitHub, so the latter should be trusted (although that may impact only quite advanced threat models).
 - **Con**: Might not always be free of direct costs.
 
+<a name="what-to-do-1"></a>
 #### What to do
 All required templates mentioned in this section are [available there](https://github.com/oleole39/prebuild-app).
 To set it up, you will need to:
@@ -91,6 +108,7 @@ Three kinds of template workflows are available:
 
 4. **Make sure `/scripts/install` and `/scripts/ugprade` use `ynh_setup_source` helper with the `source_id` flag corresponding to the prebuilt archive** as declared in the `manifest.toml` in point 2 above (e.g. `ynh_setup_source --dest_dir="$install_dir" --source_id="ynh_build"`).
 
+<a name="things-to-know-when-using-the-workflows"></a>
 #### Things to know when using the workflows
 - All workflows added to a repository are enabled by default. **To prevent a workflow to execute automatically** while not removing it, you can disable it in the Actions tab of the package's repository (provided you have write access to the latter):
     1. Select the the workflow to disable in the left sidebar.
@@ -101,12 +119,13 @@ Three kinds of template workflows are available:
     - But it is likely to happen if you try to rebuild an already published release with one of the other workflows.
     - Would that happen to you, you will want to publish a new version of the package for the same upstream version contaning updated URL in `manifest.toml` ( `[resources.sources.ynh_build]`) bumping the `~ynh` version number so that YunoHost instances' admins who installed that app are not left with a broken package on their server.
 
+<a name="3-someday-cloud-build-using-yunohosts-own-infrastructure"></a>
 ### 3. [someday™?] Cloud build using Yunohost's own infrastructure
 The method would be similar to the previous one, but would use Yunohost infrastructure via custom scripts or a self-hosted forge. However this does not exist yet... Maybe someday™.
 
+<a name="proscons-2"></a>
 #### Pros/Cons:
 - **Pro**: Independance from GitHub.
 - **Pro**: Build process (could be made) auditable (build log, time, file checksum availables).
 - **Con**: Additional maintenance work for the YunoHost project.
 - **Con**: Potential additional infrastructure costs for the YunoHost project.
-
