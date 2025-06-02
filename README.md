@@ -6,6 +6,7 @@
   * [1. Local build by the package maintainer](#1-local-build-by-the-package-maintainer)
   * [2. Cloud build using Github Actions in the app package's repository](#2-cloud-build-using-github-actions-in-the-app-packages-repository)
   * [3. [someday™?] Cloud build using Yunohost's own infrastructure](#3-someday-cloud-build-using-yunohosts-own-infrastructure)
+- [To-do list](#to-do-list)
 
 <a name="why-using-a-prebuilt-archive-in-an-app-package-"></a>
 ## Why using a prebuilt archive in an app package ?
@@ -127,6 +128,7 @@ The method would be similar to the previous one, but would use Yunohost infrastr
 - **Con**: Additional maintenance work for the YunoHost project.
 - **Con**: Potential additional infrastructure costs for the YunoHost project.
 
+<a name="to-do-list"></a>
 ## To-do list
 - [ ] Harmonize with @Josue-T script for synapse which is already in production so that we ideally have a single common template to make it easier for packagers.
 - [ ] Add support for other sources than Github URL
