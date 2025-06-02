@@ -7,6 +7,7 @@
   * [2. Cloud build using Github Actions in the app package's repository](#2-cloud-build-using-github-actions-in-the-app-packages-repository)
   * [3. [someday™?] Cloud build using Yunohost's own infrastructure](#3-someday-cloud-build-using-yunohosts-own-infrastructure)
 - [To-do list](#to-do-list)
+- [Contribute](#contribute)
 
 <a name="why-using-a-prebuilt-archive-in-an-app-package-"></a>
 ## Why using a prebuilt archive in an app package ?
@@ -15,7 +16,7 @@ Therefore YunoHost packagers generally use a prebuilt archive when available ups
 
 However in some cases:
 1. There are no prebuilt archive available upstream (e.g. [it-tools_ynh](https://github.com/Yunohost-Apps/it-tools_ynh));
-2. Upstream prebuilt archive does not suit the Yunohost package: it may contain antifeatures that can be easily removed when building the app (e.g. [jsoncrack_ynh](https://github.com/Yunohost-Apps/jsoncrack_ynh)), it may not support subpath installation unless performing a custom build it (e.g. [cinny_ynh](https://github.com/Yunohost-Apps/cinny_ynh)), etc;
+2. Upstream prebuilt archive does not suit the Yunohost package: it may contain antifeatures that can be easily removed when building the app (e.g. removing tracking such as Google Analytics & Sentry, remove intrusive calls to switch to a closed-source premium cloud-based product like in [jsoncrack_ynh](https://github.com/YunoHost-Apps/jsoncrack_ynh/blob/f529e13fc8ad75347b2859e2ec66e728676f7416/scripts/build#L30)), it may not support subpath installation unless performing a custom build it (e.g. [cinny_ynh](https://github.com/YunoHost-Apps/cinny_ynh/pull/98)), etc;
 3. You do not trust prebuilt archive and are afraid of [supply-chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack).
 
 To address those cases **as a YunoHost packager**, you may typically want to build the app locally, adding instructions for it in `scripts/install` and `scripts/upgrade`.
@@ -134,3 +135,7 @@ The method would be similar to the previous one, but would use Yunohost infrastr
 - [ ] Add support for other sources than Github URL
 - [ ] Add support for multi-arch apps
 - [ ] Tweak YNH core to offer a choice at install between prebuilt archive (if available) or local build.
+
+<a name="to-do-list"></a>
+## Contribute
+You can contribute via this repository or for a more general discussion about prebuilding files in YunoHost [check the related issue in YunohHost's issue tracker](https://github.com/YunoHost/issues/issues/2281)
