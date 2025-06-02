@@ -129,5 +129,6 @@ The method would be similar to the previous one, but would use Yunohost infrastr
 
 ## To-do list
 - [ ] Harmonize with @Josue-T script for synapse which is already in production so that we ideally have a single common template to make it easier for packagers.
+- [ ] Add support for other sources than Github URL
 - [ ] Add support for multi-arch apps
 - [ ] Tweak YNH core to offer a choice at install between prebuilt archive (if available) or local build.
