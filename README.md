@@ -51,9 +51,10 @@ An interesting example is the one created by [Josue-T](https://github.com/Josue-
 
 <a name="2-cloud-build-using-github-actions-in-the-app-packages-repository"></a>
 ### 2. Cloud build using Github Actions in the app package's repository
-This may be the most convenient method currently available for package maintainers. It is currently used by several apps:
+This may be the most convenient method currently available for package maintainers. It is currently used by several app packages:
 - [it-tools_ynh](https://github.com/Yunohost-Apps/it-tools_ynh) 
 - [jsoncrack_ynh](https://github.com/Yunohost-Apps/jsoncrack_ynh)
+- [fossflow_ynh](https://github.com/Yunohost-Apps/fossflow_ynh)
 
 <a name="proscons-1"></a>
 #### Pros/Cons
